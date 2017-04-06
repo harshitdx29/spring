@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-2.5.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basename" value="messages"/>
+    </bean>
+
+    <bean name="/hello.htm" class="com.paytm.controller.InventoryController">
+        <property name="jdbcProductDao">
+            <bean class="com.paytm.repository.JdbcProductDao">
+                <constructor-arg ref="dataSource"></constructor-arg>
+            </bean>
+        </property>
+    </bean>
+
+    <bean name="/addproduct.htm" class="com.paytm.controller.AddInventoryController">
+        <property name="jdbcProductDao">
+            <bean class="com.paytm.repository.JdbcProductDao">
+                <constructor-arg ref="dataSource"></constructor-arg>
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="dataSource"
+          class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/productsdb"/>
+        <property name="username" value="root"/>
+        <property name="password" value="pass"/>
+    </bean>
+
+    <!--<bean name="/priceincrease.htm" class="com.paytm.web.PriceIncreaseFormController">-->
+    <!--<property name="priceValidator">-->
+    <!--<bean class="com.paytm.service.PriceIncreaseValidator"/>-->
+    <!--</property>-->
+    <!--<property name="jdbcProductDao">-->
+    <!--<bean class="com.paytm.repository.JdbcProductDao">-->
+    <!--<constructor-arg ref="dataSource"></constructor-arg>-->
+    <!--</bean>-->
+    <!--</property>-->
+    <!--</bean>-->
+
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+        <property name="prefix" value="/WEB-INF/pages/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+</beans>
